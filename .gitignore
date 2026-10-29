@@ -1,0 +1,26 @@
+# Ambiente virtual
+.venv/
+venv/
+env/
+
+# Chaves e variáveis de ambiente (NUNCA subir para o GitHub)
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+
+# Banco vetorial local: gerado automaticamente na primeira execução
+chroma_db/
+.index_hash
+
+# Cache do Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# Editores e sistema operacional
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

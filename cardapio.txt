@@ -1,0 +1,118 @@
+# CARDÁPIO - FOOD MALTACA
+# Hamburgueria artesanal - Vila Madalena, São Paulo/SP
+# Cada prato começa com "##" e é separado do próximo por uma linha em branco.
+
+## Sobre o restaurante
+Categoria: Informações
+Endereço: Rua das Palmeiras, 245 - Vila Madalena, São Paulo/SP
+Horário: terça a domingo, das 18h às 23h30. Fechado às segundas-feiras.
+Entrega: entrega própria em um raio de 5 km, taxa fixa de R$ 7,90, pedido mínimo de R$ 30,00.
+Retirada: disponível no balcão, sem taxa adicional.
+Observação: não aceitamos reservas de mesa. Pedidos são feitos pelo aplicativo do iFood ou no balcão.
+Contato: WhatsApp (11) 99999-0000. Não informamos dados fiscais ou cadastrais pelo chat.
+
+## Smash Maltaca
+Categoria: Hambúrguer
+Preço: R$ 32,90
+Ingredientes: dois discos de blend bovino de 80g, queijo cheddar inglês, cebola roxa, pepino em conserva e molho da casa no pão brioche.
+Restrições: contém glúten e lactose. Não é vegano nem vegetariano.
+Alérgenos: glúten, leite, ovo (no molho) e mostarda.
+
+## Smash Bacon Duplo
+Categoria: Hambúrguer
+Preço: R$ 39,90
+Ingredientes: dois discos de blend bovino de 90g, cheddar duplo, bacon crocante, cebola caramelizada e maionese defumada no pão brioche.
+Restrições: contém glúten e lactose. Não é vegano nem vegetariano.
+Alérgenos: glúten, leite, ovo (na maionese) e mostarda.
+
+## Maltaca Vegano
+Categoria: Hambúrguer
+Preço: R$ 34,90
+Ingredientes: hambúrguer de grão-de-bico e aveia, queijo vegetal de castanha-de-caju, tomate, alface americana e molho de ervas no pão brioche vegano.
+Restrições: vegano e sem lactose. Contém glúten (aveia e pão). Contém castanha-de-caju (oleaginosa).
+Alérgenos: glúten, castanha-de-caju. Preparado em cozinha compartilhada, com risco de contaminação cruzada.
+
+## Frango Crocante
+Categoria: Hambúrguer
+Preço: R$ 33,90
+Ingredientes: filé de frango empanado e frito, queijo muçarela, alface, tomate e molho ranch no pão brioche.
+Restrições: contém glúten e lactose. Não é vegano.
+Alérgenos: glúten, leite, ovo e soja.
+
+## Cheddar Melt
+Categoria: Hambúrguer
+Preço: R$ 36,90
+Ingredientes: disco de blend bovino de 160g, creme de cheddar, cebola crispy e picles no pão australiano.
+Restrições: contém glúten e lactose. Não é vegano. Possui versão com pão sem glúten por R$ 6,00 adicionais.
+Alérgenos: glúten, leite, ovo e mostarda.
+
+## Batata Rústica com Cheddar e Bacon
+Categoria: Acompanhamento
+Preço: R$ 24,90
+Ingredientes: batatas rústicas com casca, creme de cheddar, bacon em cubos e cebolinha.
+Restrições: sem glúten. Contém lactose. Não é vegetariano (leva bacon).
+Alérgenos: leite. Fritura compartilhada com itens que contêm glúten.
+
+## Batata Doce Frita
+Categoria: Acompanhamento
+Preço: R$ 19,90
+Ingredientes: batata-doce em palitos, frita e finalizada com sal marinho e páprica.
+Restrições: vegano, sem glúten e sem lactose.
+Alérgenos: nenhum declarado. Fritura compartilhada com itens que contêm glúten.
+
+## Onion Rings
+Categoria: Acompanhamento
+Preço: R$ 21,90
+Ingredientes: anéis de cebola empanados em farinha de trigo, servidos com molho barbecue da casa.
+Restrições: vegetariano. Contém glúten.
+Alérgenos: glúten e mostarda (no molho barbecue).
+
+## Combo Maltaca para 2
+Categoria: Combo
+Preço: R$ 89,90
+Ingredientes: dois Smash Maltaca, uma Batata Rústica com Cheddar e Bacon e duas bebidas de 350 ml (refrigerante ou chá gelado).
+Restrições: contém glúten e lactose. Bebidas podem ser trocadas por versão sem açúcar.
+Alérgenos: glúten, leite, ovo e mostarda.
+
+## Milkshake de Oreo
+Categoria: Bebida
+Preço: R$ 22,90
+Ingredientes: sorvete de baunilha, leite integral, biscoitos Oreo triturados e chantilly.
+Restrições: contém glúten e lactose. Não é vegano. Disponível em 400 ml.
+Alérgenos: glúten, leite e soja.
+
+## Limonada Suíça
+Categoria: Bebida
+Preço: R$ 14,90
+Ingredientes: limão siciliano batido com leite condensado, gelo e água. Copo de 500 ml.
+Restrições: contém lactose. Sem glúten. Não é vegano.
+Alérgenos: leite.
+
+## Cerveja Artesanal IPA
+Categoria: Bebida
+Preço: R$ 18,90
+Ingredientes: cerveja IPA local de 355 ml, produzida com cevada e lúpulo. Teor alcoólico de 6,2%. Venda proibida para menores de 18 anos.
+Restrições: contém glúten (cevada). Não é vegano.
+Alérgenos: glúten.
+
+## Brownie com Sorvete
+Categoria: Sobremesa
+Preço: R$ 26,90
+Ingredientes: brownie de chocolate 70% com nozes, sorvete de creme e calda de chocolate quente.
+Restrições: contém glúten, lactose, ovo e nozes. Não é vegano.
+Alérgenos: glúten, leite, ovo e nozes.
+
+## Petit Gâteau Vegano de Coco
+Categoria: Sobremesa
+Preço: R$ 27,90
+Ingredientes: bolo quente de coco e cacau com recheio cremoso de castanha-de-caju, servido com sorvete de coco.
+Restrições: vegano, sem lactose e sem glúten.
+Alérgenos: castanha-de-caju (oleaginosa). Preparado em cozinha compartilhada.
+
+## Informações sobre restrições alimentares
+Categoria: Informações
+Pão sem glúten: disponível para qualquer hambúrguer por R$ 6,00 adicionais. O pão é assado fora do restaurante, mas a montagem ocorre na mesma cozinha dos demais itens.
+Contaminação cruzada: a cozinha manipula glúten, leite, ovos, soja, castanhas e nozes no mesmo ambiente. Não é possível garantir ausência total de traços.
+Opções veganas: Maltaca Vegano, Batata Doce Frita, Petit Gâteau Vegano de Coco.
+Opções sem glúten: Batata Doce Frita, Petit Gâteau Vegano de Coco e qualquer hambúrguer com a troca do pão por R$ 6,00.
+Aviso: em caso de alergia severa, orientamos confirmar os ingredientes diretamente com a equipe do restaurante antes de finalizar o pedido.
