@@ -17,7 +17,8 @@ O ponto central do projeto é o **guardrail anti-alucinação**: se a informaç�
 - **Recusa explícita** — perguntas fora do cardápio recebem *"Não encontrei essa informação no cardápio do Food Maltaca."*
 - **Fontes visíveis** — um expander mostra quais trechos foram consultados e a distância de similaridade de cada um.
 - **Memória curta** — as últimas 6 mensagens vão como histórico, então dá para perguntar "e o preço dele?" depois de citar um prato.
-- **Resiliência** — retentativas automáticas em erros temporários e fallback para um segundo modelo se o principal estiver indisponível.
+- **Resposta em streaming** — o texto aparece conforme o modelo gera, sem tela parada esperando a resposta completa.
+- **Resiliência** — se o modelo principal falhar ou demorar, a resposta cai automaticamente para um modelo alternativo, e a interface informa qual respondeu.
 - **Chave pela interface** — o usuário cola a própria Gemini API Key na barra lateral; nada de credencial no código.
 - **Índice incremental** — o ChromaDB só é reconstruído quando o `cardapio.txt` muda (comparação por hash).
 
@@ -130,7 +131,8 @@ A primeira execução indexa o cardápio (~10 segundos). Nas seguintes, reutiliz
 - **Embeddings locais, LLM na nuvem.** Só a geração custa API. A busca é gratuita, rápida e funciona offline.
 - **Guardrail no prompt, não no código.** O modelo recebe instrução explícita de recusar o que não está no contexto, e a temperatura baixa reduz variação. Respostas do tipo "não encontrei" são o comportamento correto, não uma falha.
 - **Histórico como steps da Interactions API.** As últimas 6 mensagens são enviadas no formato `user_input` / `model_output`, sem estado no servidor (`store=False`), o que mantém a conversa reproduzível.
-- **Fallback entre modelos.** Se o modelo principal devolver `503`/`429`, a chamada cai para `gemini-3.5-flash-lite` e a interface informa qual respondeu. Disponibilidade de LLM é um problema real em produção.
+- **Streaming desde a primeira versão.** A interface usa `st.write_stream` e a Interactions API em modo `stream`, então o usuário vê o texto surgindo em ~1s em vez de esperar o modelo terminar. Como o Streamlit renderiza Markdown, os `$` de "R$" são escapados durante o stream para não virarem fórmula LaTeX.
+- **Fallback entre modelos, e não retentativa.** O SDK conta *timeout* como erro transitório e, com múltiplas tentativas, insiste no mesmo modelo por minutos. Por isso o cliente usa `attempts=1`: se o modelo principal devolver `503`/`429` ou estourar o tempo, a chamada vai direto para `gemini-3.5-flash-lite`. O fallback só acontece enquanto nada foi exibido — se a conexão cair no meio do texto, é melhor mostrar o erro do que emendar duas respostas.
 - **Índice com hash.** Evita reindexar a cada reinício e evita índices desatualizados quando o cardápio muda.
 
 ---

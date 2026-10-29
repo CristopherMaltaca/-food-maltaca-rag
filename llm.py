@@ -1,4 +1,5 @@
 import time
+from collections.abc import Generator
 
 from google import genai
 
@@ -45,8 +46,13 @@ def _modelos() -> list[str]:
     return [config.MODELO, *config.MODELOS_FALLBACK]
 
 
-def _criar_cliente(api_key: str, tentativas: int = 3) -> genai.Client:
-    """Cria o cliente apontando para a Gemini API, com timeout e retentativas."""
+def _criar_cliente(api_key: str, tentativas: int = 1) -> genai.Client:
+    """Cria o cliente apontando para a Gemini API.
+
+    O SDK conta timeout como erro transitório; com mais de uma tentativa ele
+    insiste no mesmo modelo por vários minutos. Preferimos falhar rápido e
+    deixar o fallback entre modelos fazer o trabalho.
+    """
     return genai.Client(
         api_key=api_key,
         vertexai=False,
@@ -62,9 +68,20 @@ def _criar_cliente(api_key: str, tentativas: int = 3) -> genai.Client:
 
 
 def _erro_transitorio(erro: Exception) -> bool:
-    """Indica se vale a pena tentar o próximo modelo (indisponibilidade/cota)."""
-    texto = str(erro)
-    sinais = ("503", "429", "500", "502", "504", "UNAVAILABLE", "NOT_FOUND")
+    """Indica se vale a pena tentar o próximo modelo (indisponibilidade/cota/lentidão)."""
+    texto = str(erro).lower()
+    sinais = (
+        "503",
+        "429",
+        "408",
+        "500",
+        "502",
+        "504",
+        "unavailable",
+        "not_found",
+        "timed out",
+        "timeout",
+    )
     return any(sinal in texto for sinal in sinais)
 
 
@@ -157,22 +174,24 @@ def _montar_historico(historico: list[dict] | None) -> list[dict]:
     return passos
 
 
-def responder(
+def responder_stream(
     pergunta: str,
     contexto: str,
     historico: list[dict] | None = None,
     api_key: str | None = None,
-) -> tuple[str, str]:
+    estado: dict | None = None,
+) -> Generator[str, None, None]:
     """
-    Gera a resposta do assistente.
+    Gera a resposta do assistente em streaming, pedaço por pedaço.
 
-    Retorna (texto, modelo_usado). Se o modelo principal estiver indisponível,
-    tenta os seguintes da lista de fallback.
+    Se o modelo principal estiver indisponível ou lento, tenta os fallbacks —
+    mas só enquanto nada foi enviado, para não misturar respostas.
 
     pergunta:  dúvida do usuário.
     contexto:  trechos do cardápio recuperados pelo RAG.
     historico: mensagens anteriores da conversa (opcional).
     api_key:   chave do Gemini (a da interface tem prioridade sobre a do .env).
+    estado:    dicionário opcional que recebe o nome do modelo usado.
     """
     chave = (api_key or config.GEMINI_API_KEY or "").strip()
     if not chave:
@@ -196,27 +215,38 @@ def responder(
     )
 
     ultimo_erro = None
+    parcial: list[str] = []
+
     try:
         for indice, modelo in enumerate(_modelos()):
             try:
-                interacao = cliente.interactions.create(
+                fluxo = cliente.interactions.create(
                     model=modelo,
                     system_instruction=SYSTEM_PROMPT,
                     input=entrada,
                     generation_config=_config_geracao(com_raciocinio=indice == 0),
+                    stream=True,
                     store=False,
                     automatic_continuation=False,
                 )
-                texto = (interacao.output_text or "").strip()
-                return (
-                    texto
-                    or "Não consegui gerar uma resposta agora. "
-                    "Tente reformular a pergunta.",
-                    modelo,
-                )
+                if estado is not None:
+                    estado["modelo"] = modelo
+
+                for evento in fluxo:
+                    if evento.event_type != "step.delta":
+                        continue
+                    if evento.delta.type != "text":
+                        continue
+                    parcial.append(evento.delta.text)
+                    yield evento.delta.text
+                return
             except Exception as erro:
                 ultimo_erro = erro
-                if not _erro_transitorio(erro) or indice == len(_modelos()) - 1:
+                if (
+                    parcial
+                    or not _erro_transitorio(erro)
+                    or indice == len(_modelos()) - 1
+                ):
                     raise
 
         raise ultimo_erro

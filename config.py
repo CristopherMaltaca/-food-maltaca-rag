@@ -18,6 +18,6 @@ MODELO = "gemini-3.6-flash"
 MODELOS_FALLBACK = ["gemini-3.5-flash-lite"]
 THINKING_LEVEL = "low"
 TEMPERATURA = 0.2
-TIMEOUT_MS = 45000
+TIMEOUT_MS = 40000
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "").strip()

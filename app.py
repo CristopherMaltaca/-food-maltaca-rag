@@ -145,36 +145,45 @@ if pergunta:
         st.warning("Cole sua Gemini API Key na barra lateral para conversar.")
     else:
         with st.chat_message("assistant"):
-            with st.spinner("Consultando o cardápio..."):
-                try:
-                    fontes = rag.buscar(pergunta)
-                    contexto = "\n\n---\n\n".join(f["texto"] for f in fontes)
-                    resposta, modelo = llm.responder(
-                        pergunta=pergunta,
-                        contexto=contexto,
-                        historico=st.session_state.mensagens,
-                        api_key=chave,
-                    )
-                    erro = None
-                except Exception as falha:
-                    resposta = None
-                    modelo = None
-                    erro = falha
+            estado = {}
+            pedacos = []
+
+            def com_escape(pedaços_do_modelo):
+                for pedaco in pedaços_do_modelo:
+                    pedacos.append(pedaco)
+                    yield pedaco.replace("$", "\\$")
+
+            try:
+                fontes = rag.buscar(pergunta)
+                contexto = "\n\n---\n\n".join(f["texto"] for f in fontes)
+                fluxo = llm.responder_stream(
+                    pergunta=pergunta,
+                    contexto=contexto,
+                    historico=st.session_state.mensagens,
+                    api_key=chave,
+                    estado=estado,
+                )
+                st.write_stream(com_escape(fluxo))
+                resposta = "".join(pedacos).strip()
+                erro = None
+            except Exception as falha:
+                resposta = "".join(pedacos).strip()
+                erro = falha
 
             if erro is not None:
                 st.error(llm.mensagem_de_erro(erro))
             else:
-                st.markdown(escapar_cifrao(resposta))
-                st.caption(f"respondido por `{modelo}`")
+                if estado.get("modelo"):
+                    st.caption(f"respondido por `{estado['modelo']}`")
                 mostrar_fontes(fontes)
 
-        if erro is None:
+        if erro is None and resposta:
             st.session_state.mensagens.append({"role": "user", "content": pergunta})
             st.session_state.mensagens.append(
                 {
                     "role": "assistant",
                     "content": resposta,
                     "fontes": fontes,
-                    "modelo": modelo,
+                    "modelo": estado.get("modelo"),
                 }
             )
