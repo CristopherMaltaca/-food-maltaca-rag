@@ -4,6 +4,7 @@
 ![Streamlit](https://img.shields.io/badge/Streamlit-1.66-FF4B4B?logo=streamlit&logoColor=white)
 ![ChromaDB](https://img.shields.io/badge/ChromaDB-1.5-FF6B35)
 ![Gemini](https://img.shields.io/badge/Google_Gemini-Interactions_API-4285F4?logo=google&logoColor=white)
+![License](https://img.shields.io/badge/license-MIT-green)
 
 Um assistente de chat que responde dúvidas sobre o cardápio de um restaurante fictício (a hamburgueria **Food Maltaca**) usando **RAG**: ele busca os trechos relevantes do cardápio antes de responder e só usa o que está lá.
 
@@ -84,6 +85,7 @@ O ponto central do projeto é o **guardrail anti-alucinação**: se a informaç�
 ├── cardapio.txt        # base de conhecimento (cardápio do restaurante)
 ├── requirements.txt
 ├── .env.example
+├── LICENSE
 └── README.md
 ```
 
@@ -143,3 +145,9 @@ A primeira execução indexa o cardápio (~10 segundos). Nas seguintes, reutiliz
 - **Sem reranking.** Recuperação é puramente vetorial; um cross-encoder melhoraria perguntas ambíguas.
 - **Sem avaliação automatizada.** O próximo passo natural é um conjunto de perguntas com respostas esperadas e medição de acerto/recusa.
 - **Base estática.** Atualizações do cardápio exigem reindexação (automática, via hash).
+
+---
+
+## 📄 Licença
+
+MIT — use, modifique e compartilhe à vontade. Veja [LICENSE](LICENSE).
